@@ -1,0 +1,13 @@
+name: health_modelling
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - notebook
+  - pandas
+  - requests
+  - numpy
+  - scipy
+  - matplotlib
+  - seaborn
+  - ipykernel
