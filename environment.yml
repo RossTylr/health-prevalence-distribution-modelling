@@ -3,11 +3,24 @@ channels:
   - conda-forge
 dependencies:
   - python=3.10
+  - ipykernel
   - notebook
+  - jupyterlab
   - pandas
-  - requests
   - numpy
   - scipy
   - matplotlib
   - seaborn
-  - ipykernel
+  - plotly
+  - altair
+  - statsmodels
+  - requests
+  - openpyxl
+  - pyarrow
+  - xlrd
+  - json5
+  - tqdm
+  - pip
+  - pip:
+      - fingertips-py  # If you choose to use a wrapper library (optional)
+      - pyreadstat      # For STATA/SAV files if needed
