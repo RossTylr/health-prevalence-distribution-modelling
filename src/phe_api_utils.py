@@ -1,23 +1,49 @@
 import requests
 import pandas as pd
 import time
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
-# Base URL for Fingertips API
-BASE_URL = "https://fingertips.phe.org.uk/api/"
+# Base URL for Fingertips API - updated to use the correct endpoint
+BASE_URL = "https://fingertipsws.phe.org.uk/api/1.0/"
+
+# Configure retry strategy
+retry_strategy = Retry(
+    total=3,  # number of retries
+    backoff_factor=1,  # wait 1, 2, 4 seconds between retries
+    status_forcelist=[500, 502, 503, 504]  # HTTP status codes to retry on
+)
+adapter = HTTPAdapter(max_retries=retry_strategy)
+session = requests.Session()
+session.mount("https://", adapter)
 
 def fetch_json(endpoint: str, params: dict = None):
     """
     Helper to GET JSON from a Fingertips API endpoint and return the parsed object.
-    Automatically raises for HTTP errors and includes a polite pause.
+    Includes retry logic and better error handling.
     """
     url = BASE_URL.rstrip('/') + endpoint
     try:
-        resp = requests.get(url, params=params)
+        print(f"Fetching from: {url}")  # Debug print
+        resp = session.get(url, params=params, timeout=30)  # Added timeout
         resp.raise_for_status()
+        
+        # Verify we got JSON back
+        content_type = resp.headers.get('content-type', '')
+        if 'application/json' not in content_type.lower():
+            print(f"Warning: Expected JSON but got {content_type}")
+            print(f"Response preview: {resp.text[:200]}...")
+            return None
+            
         time.sleep(0.2)  # Polite pause to not overwhelm the API
         return resp.json()
     except requests.exceptions.RequestException as e:
         print(f"Error fetching {url}: {e}")
+        if hasattr(e, 'response') and e.response is not None:
+            print(f"Status code: {e.response.status_code}")
+            print(f"Response headers: {dict(e.response.headers)}")
+            if hasattr(e.response, 'text'):
+                print(f"Response text: {e.response.text[:500]}...")  # Truncate long responses
         return None
 
 def get_profiles() -> pd.DataFrame:

@@ -1,10 +1,29 @@
 # Health Prevalence & Distribution Modelling for Diagnostic Demand
 
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Project Status: Active Development](https://img.shields.io/badge/Project%20Status-Active%20Development-green)](https://github.com/RossTylr/health-prevalence-distribution-modelling)
+
 This repository explores the use of probability density functions (PDFs) to model the prevalence of health conditions and forecast diagnostic service demand, with a focus on the NHS South West region.
 
-The project is divided into two main parts:
-1.  **Synthetic Data Exploration**: We begin by using synthetic data to understand how PDFs can represent the complex, variable nature of conditions like frailty, multimorbidity, and other long-term conditions (LTCs).
-2.  **Real-World Data Acquisition**: We then use the Public Health England (PHE) Fingertips API to acquire real-world prevalence data and test the assumptions from our initial models.
+## Project Status
+- **Version**: 1.0.0
+- **Status**: Active Development
+- **Last Updated**: [Current Date]
+- **Known Limitations**: 
+  - Models in Part 1 use synthetic data for demonstration
+  - Real-world validation requires NHS South West data
+  - API rate limits may apply when fetching PHE Fingertips data
+
+## Quick Start
+```bash
+# Clone and setup
+git clone https://github.com/RossTylr/health-prevalence-distribution-modelling.git
+cd health-prevalence-distribution-modelling
+conda env create -f environment.yml
+conda activate health_modelling
+jupyter notebook
+```
 
 ## Objectives
 
@@ -12,6 +31,29 @@ The project is divided into two main parts:
 * To simulate how demographic factors like **age, location, and deprivation** impact condition prevalence.
 * To provide a framework for **estimating diagnostic demand** (e.g., for CT, MRI, ultrasound) based on population health distributions.
 * To create a practical, code-based guide to accessing and analysing key public health datasets from the PHE Fingertips API.
+
+## Requirements
+- Python 3.9 or higher
+- Conda package manager
+- Key dependencies (see environment.yml for full list):
+  - pandas >= 1.5.0
+  - numpy >= 1.21.0
+  - scipy >= 1.7.0
+  - matplotlib >= 3.5.0
+  - jupyter >= 1.0.0
+  - requests >= 2.28.0
+
+## Project Structure
+```
+health-prevalence-distribution-modelling/
+├── notebooks/               # Jupyter notebooks (1-10)
+├── data/                    # Data storage directory
+│   ├── raw/                # Raw data from PHE Fingertips
+│   └── processed/          # Processed datasets
+├── src/                    # Source code modules
+├── environment.yml         # Conda environment specification
+└── README.md              # This file
+```
 
 ## Setup and Installation
 
@@ -33,6 +75,28 @@ To run the notebooks in this repository, you'll need Conda.
     ```bash
     jupyter notebook
     ```
+
+### Troubleshooting
+- If you encounter SSL certificate errors when accessing the PHE Fingertips API, ensure your Python environment has updated certificates
+- For memory issues with large datasets, consider using pandas' chunking functionality
+- If conda environment creation fails, try updating conda first: `conda update conda`
+
+## Contributing
+We welcome contributions! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+- Public Health England (PHE) Fingertips API for providing the data
+- NHS South West for regional context and validation
+- Contributors and reviewers of this project
 
 ## Notebook Guide
 
